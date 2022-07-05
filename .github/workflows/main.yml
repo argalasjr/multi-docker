@@ -21,38 +21,42 @@ jobs:
 
       -
         name: Build and push client
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ./client
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multiclient:latest
-            -
-      - name: Build and push server
-        uses: docker/build-push-action@v2
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-client:latest
+          
+      -
+        name: Build and push server
+        uses: docker/build-push-action@v3
         with:
           context: ./server
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multiserver:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:latest
 
-      - name: Build and push worker
-        uses: docker/build-push-action@v2
+      - 
+        name: Build and push worker
+        uses: docker/build-push-action@v3
         with:
           context: ./worker
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multiworker:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:latest
 
-      - name: Build and push nginx
-        uses: docker/build-push-action@v2
+      - 
+        name: Build and push nginx
+        uses: docker/build-push-action@v3
         with:
           context: ./nginx
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multinginx:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-nginx:latest
  
-      - name: Generate deployment package
+      - 
+        name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
  
       # - name: Deploy to EB
