@@ -10,12 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Dump env
-        run: env | sort
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github.event.release) }}
-        run: echo "$GITHUB_CONTEXT"
+      - name: Get package info
+        id: package
+        uses: codex-team/action-nodejs-package-info@v1
+
+      - name: Get the output
+        run: |
+          echo "name: ${{ steps.package.outputs.name }}"
+          echo "version: ${{ steps.package.outputs.version }}"
+          echo "npmjs-link: ${{ steps.package.outputs.npmjs-link }}"
 
       # - name: Login to Docker Hub
       #   uses: docker/login-action@v2
