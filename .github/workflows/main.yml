@@ -59,7 +59,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: '${{ secrets.DOCKER_USERNAME }}/multi-client:${{ env.SHA }}'
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-client:${{ steps.package.outputs.version }}
           
       -
         name: Build and push server
@@ -68,7 +68,7 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:${{ env.SHA }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:${{ steps.package.outputs.version }}
 
       - 
         name: Build and push worker
@@ -77,7 +77,7 @@ jobs:
           context: ./worker
           file: ./worker/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:${{ env.SHA }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:${{ steps.package.outputs.version }}
 
       # NOT NEEEDED WITH K8S - only for AWS PROD DOCKER
       # - 
