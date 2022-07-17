@@ -21,6 +21,7 @@ jobs:
         run: |
           echo "name: ${{ steps.package.outputs.name }}"
           echo "version: ${{ steps.package.outputs.version }}"
+          echo "commit: ${{ env.SHA }}"
 
       - name: Set Service Key
         uses: 'google-github-actions/auth@v0'
@@ -58,7 +59,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-client:${{ env.SHA }}
+          tags: '${{ secrets.DOCKER_USERNAME }}/multi-client:${{ env.SHA }}'
           
       -
         name: Build and push server
