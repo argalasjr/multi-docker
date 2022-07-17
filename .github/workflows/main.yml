@@ -84,7 +84,7 @@ jobs:
           file: ./client/Dockerfile
           push: true
           tags: 
-            ${{ secrets.DOCKER_USERNAME }}/multi-client:${{ $(git rev-parse HEAD) }}
+            ${{ secrets.DOCKER_USERNAME }}/multi-client:${{ (git rev-parse HEAD) }}
             ${{ secrets.DOCKER_USERNAME }}/multi-client:latest
           
       -
@@ -94,7 +94,7 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:${{ $(git rev-parse HEAD) }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:${{ (git rev-parse HEAD) }}
 
       - 
         name: Build and push worker
@@ -103,7 +103,7 @@ jobs:
           context: ./worker
           file: ./worker/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:${{ $(git rev-parse HEAD) }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:${{ (git rev-parse HEAD) }}
 
       # NOT NEEEDED WITH K8S - only for AWS PROD DOCKER
       # - 
