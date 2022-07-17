@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+ 
+kind: Certificate
+metadata:
+  name: k8sdeployedby-me-tls
+spec:
+  secretName: k8sdeployedby-me
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: k8sdeployedby.me
+  dnsNames:
+    - k8sdeployedby.me
+    - www.k8sdeployedby.me
