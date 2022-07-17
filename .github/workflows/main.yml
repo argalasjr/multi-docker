@@ -83,7 +83,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-client:${{ env.SHA }} , ${{ secrets.DOCKER_USERNAME }}/multi-client:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-client:$SHA , ${{ secrets.DOCKER_USERNAME }}/multi-client:latest
           build-args: |
             SHA=${{ env.SHA }}
           
@@ -94,7 +94,7 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:${{ env.SHA }} , ${{ secrets.DOCKER_USERNAME }}/multi-server:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:$SHA  , ${{ secrets.DOCKER_USERNAME }}/multi-server:latest
           build-args: |
             SHA=${{ env.SHA }}
 
@@ -105,9 +105,7 @@ jobs:
           context: ./worker
           file: ./worker/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:${{ env.SHA }} , ${{ secrets.DOCKER_USERNAME }}/multi-worker:latest
-          build-args: |
-            SHA=${{ env.SHA }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:$SHA , ${{ secrets.DOCKER_USERNAME }}/multi-worker:latest
 
       # NOT NEEEDED WITH K8S - only for AWS PROD DOCKER
       # - 
