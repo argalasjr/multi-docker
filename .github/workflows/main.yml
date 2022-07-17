@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - main
-
-env:
-  SHA: $(git rev-parse --short HEAD)
  
 jobs:
   build:
@@ -21,7 +18,7 @@ jobs:
         run: |
           echo "name: ${{ steps.package.outputs.name }}"
           echo "version: ${{ steps.package.outputs.version }}"
-          echo "commit: ${{ env.SHA }}"
+          echo "commit: ${{ github.sha }}"
 
       - name: Set Service Key
         uses: 'google-github-actions/auth@v0'
@@ -83,7 +80,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-client:$SHA , ${{ secrets.DOCKER_USERNAME }}/multi-client:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-client:${{ github.sha }} , ${{ secrets.DOCKER_USERNAME }}/multi-client:latest
           build-args: |
             SHA=${{ env.SHA }}
           
@@ -94,7 +91,7 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:$SHA  , ${{ secrets.DOCKER_USERNAME }}/multi-server:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-server:${{ github.sha }}  , ${{ secrets.DOCKER_USERNAME }}/multi-server:latest
           build-args: |
             SHA=${{ env.SHA }}
 
@@ -105,7 +102,7 @@ jobs:
           context: ./worker
           file: ./worker/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:$SHA , ${{ secrets.DOCKER_USERNAME }}/multi-worker:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/multi-worker:${{ github.sha }} , ${{ secrets.DOCKER_USERNAME }}/multi-worker:latest
 
       # NOT NEEEDED WITH K8S - only for AWS PROD DOCKER
       # - 
@@ -135,7 +132,7 @@ jobs:
       - name: Apply k8s
         run: |-
           kubectl apply -f k8s
-          kubectl set image deployments/server-deployment server=argalasjr/multi-server:${{ env.SHA }}
-          kubectl set image deployments/client-deployment client=argalasjr/multi-client:${{ env.SHA }}
-          kubectl set image deployments/worker-deployment worker=argalasjr/multi-worker:${{ env.SHA }}
+          kubectl set image deployments/server-deployment server=argalasjr/multi-server:${{ github.sha }}
+          kubectl set image deployments/client-deployment client=argalasjr/multi-client:${{ github.sha }}
+          kubectl set image deployments/worker-deployment worker=argalasjr/multi-worker:${{ github.sha }}
  
